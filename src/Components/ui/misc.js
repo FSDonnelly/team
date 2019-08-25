@@ -23,3 +23,24 @@ export const Tag = ({ add, bck, children, color, link, linkTo, size }) => {
     return template;
   }
 };
+
+export const firebaseLooper = snapshot => {
+  const data = [];
+
+  snapshot.forEach(childSnapshot => {
+    data.push({
+      ...childSnapshot.val(),
+      id: childSnapshot.key
+    });
+  });
+  return data;
+};
+
+export const reverseArray = actualArray => {
+  let reverseArray = [];
+
+  for (let i = actualArray.length - 1; i >= 0; i--) {
+    reverseArray.push(actualArray[i]);
+  }
+  return reverseArray;
+};

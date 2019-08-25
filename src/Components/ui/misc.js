@@ -10,7 +10,8 @@ export const Tag = ({ add, bck, children, color, link, linkTo, size }) => {
         color,
         padding: '5px 10px',
         display: 'inline-block',
-        fontFamily: 'Righteous'
+        fontFamily: 'Righteous',
+        ...add
       }}
     >
       {children}

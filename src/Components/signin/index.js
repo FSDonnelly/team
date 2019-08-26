@@ -75,7 +75,7 @@ class SignIn extends Component {
         .auth()
         .signInWithEmailAndPassword(dataToSubmit.email, dataToSubmit.password)
         .then(() => {
-          console.log('user is auth');
+          this.props.history.push('/dashboard');
         })
         .catch(error => {
           this.setState({

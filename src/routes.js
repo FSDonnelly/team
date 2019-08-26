@@ -3,11 +3,13 @@ import { Switch, Route } from 'react-router-dom';
 
 import Layout from './HOC/Layout';
 import Home from './Components/home';
+import SignIn from './Components/signin';
 
 const Routes = props => {
   return (
     <Layout>
       <Switch>
+        <Route exact component={SignIn} path='/sign_in' />
         <Route exact component={Home} path='/' />
       </Switch>
     </Layout>

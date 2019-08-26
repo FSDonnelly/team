@@ -158,6 +158,31 @@ export class AddMatch extends Component {
       }
     }
   };
+
+  updateForm(element) {
+    const newFormData = { ...this.state.formData };
+    const newElement = { ...newFormData[element.id] };
+
+    newElement.value = element.e.target.value;
+
+    let validData = validate(newElement);
+
+    newElement.valid = validData[0];
+    newElement.validationMessage = validData[1];
+
+    newFormData[element.id] = newElement;
+
+    this.setState({
+      formError: false,
+      formData: newFormData
+    });
+  }
+
+  componentDidMount() {
+    const matchId = this.props.match.params.id;
+    console.log(matchId);
+  }
+
   render() {
     const { formData, formSuccess, formError, formType } = this.state;
     return (

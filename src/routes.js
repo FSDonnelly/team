@@ -1,11 +1,12 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import Layout from './HOC/Layout';
 
 import Home from './Components/home';
 import SignIn from './Components/signin';
 
 import PrivateRoute from './Components/authRoutes/PrivateRoute';
+import PublicRoute from './Components/authRoutes/PublicRoute';
 import Dashboard from './Components/admin/Dashboard';
 
 const Routes = props => {
@@ -18,8 +19,20 @@ const Routes = props => {
           exact
           component={Dashboard}
         />
-        <Route exact component={SignIn} path='/sign_in' />
-        <Route exact component={Home} path='/' />
+        <PublicRoute
+          {...props}
+          exact
+          restricted={true}
+          component={SignIn}
+          path='/sign_in'
+        />
+        <PublicRoute
+          {...props}
+          exact
+          restricted={false}
+          component={Home}
+          path='/'
+        />
       </Switch>
     </Layout>
   );

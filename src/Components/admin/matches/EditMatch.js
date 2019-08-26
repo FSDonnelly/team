@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import FormField from '../../ui/formFields';
 import { validate } from '../../ui/misc';
 import AdminLayout from '../../../HOC/AdminLayout';
+import {
+  firebaseMatches,
+  firebaseTeams,
+  fierbaseDB,
+  firebaseDB
+} from '../../../firebase';
+import { firebaseLooper } from '../../ui/misc';
 
-export class AddMatch extends Component {
+class EditMatch extends Component {
   state = {
     matchId: '',
     formType: '',
@@ -178,9 +185,76 @@ export class AddMatch extends Component {
     });
   }
 
+  updateFields(match, teamOptions, teams, type, matchId) {
+    const newFormData = {
+      ...this.state.formData
+    };
+    for (let key in newFormData) {
+      if (match) {
+        console.log(match);
+        newFormData[key].value = match[key];
+        newFormData[key].valid = true;
+      }
+      if (key === 'local' || key === 'away') {
+        newFormData[key].config.options = teamOptions;
+      }
+    }
+    console.log(newFormData);
+    this.setState({
+      matchId,
+      formType: type,
+      formData: newFormData,
+      teams
+    });
+  }
+
   componentDidMount() {
     const matchId = this.props.match.params.id;
-    console.log(matchId);
+    const getTeams = (match, type) => {
+      firebaseTeams.once('value').then(snapshot => {
+        const teams = firebaseLooper(snapshot);
+        const teamOptions = [];
+        snapshot.forEach(childSnapshot => {
+          teamOptions.push({
+            key: childSnapshot.val().shortName,
+            value: childSnapshot.val().shortName
+          });
+        });
+        this.updateFields(match, teamOptions, teams, type, matchId);
+      });
+    };
+
+    if (!matchId) {
+      // Add Match
+    } else {
+      firebaseDB
+        .ref(`matches/${matchId}`)
+        .once('value')
+        .then(snapshot => {
+          const match = snapshot.val();
+
+          getTeams(match, 'Edit Match');
+        });
+    }
+  }
+
+  submitForm(e) {
+    e.preventDefault();
+
+    let dataToSubmit = {};
+    let formIsValid = true;
+
+    for (let key in this.state.formData) {
+      dataToSubmit[key] = this.state.formData[key].value;
+      formIsValid = this.state.formData[key].valid && formIsValid;
+    }
+    if (formIsValid) {
+      console.log(dataToSubmit);
+    } else {
+      this.setState({
+        formError: true
+      });
+    }
   }
 
   render() {
@@ -188,7 +262,7 @@ export class AddMatch extends Component {
     return (
       <AdminLayout>
         <div className='editmatch_dialog_wrapper'>
-          <h2>{this.state.formType}</h2>
+          <h2>{formType}</h2>
           <div>
             <form onSubmit={e => this.submitForm(e)}>
               <FormField
@@ -240,6 +314,7 @@ export class AddMatch extends Component {
                   id={'referee'}
                   formData={formData.referee}
                   change={element => this.updateForm(element)}
+                  value
                 />
                 <FormField
                   id={'stadium'}
@@ -276,4 +351,4 @@ export class AddMatch extends Component {
   }
 }
 
-export default AddMatch;
+export default EditMatch;

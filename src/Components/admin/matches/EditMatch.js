@@ -199,7 +199,6 @@ class EditMatch extends Component {
       formData: newFormData,
       teams
     });
-    console.log(this.state.formData);
   }
 
   componentDidMount() {

@@ -92,6 +92,21 @@ class EditPlayer extends Component {
     }
   };
 
+  updateFields = (player, playerId, formType, defaultImg) => {
+    const { formData } = this.state;
+    const newFormData = { ...formData };
+
+    for (let key in newFormData) {
+      newFormData[key].value = player[key];
+      newFormData[key].valid = true;
+    }
+    this.setState({
+      playerId,
+      defaultImg,
+      formType,
+      formData: newFormData
+    });
+  };
   componentDidMount() {
     const playerId = this.props.match.params.id;
 
@@ -100,7 +115,21 @@ class EditPlayer extends Component {
         formType: 'Add Player'
       });
     } else {
-      //
+      firebaseDB
+        .ref(`players/${playerId}`)
+        .once('value')
+        .then(snapshot => {
+          const playerData = snapshot.val();
+
+          firebase
+            .storage()
+            .ref('players')
+            .child(playerData.image)
+            .getDownloadURL()
+            .then(url => {
+              this.updateFields(playerData, playerId, 'Edit Player', url);
+            });
+        });
     }
   }
 
@@ -127,9 +156,20 @@ class EditPlayer extends Component {
     });
   }
 
+  successForm = message => {
+    this.setState({
+      formSuccess: message
+    });
+    setTimeout(() => {
+      this.setState({
+        formSuccess: ''
+      });
+    }, 2000);
+  };
+
   submitForm(e) {
     e.preventDefault();
-    const { formType } = this.state;
+    const { formType, playerId } = this.state;
     let dataToSubmit = {};
     let formIsValid = true;
 
@@ -140,7 +180,17 @@ class EditPlayer extends Component {
 
     if (formIsValid) {
       if (formType === 'Edit Player') {
-        ///
+        firebaseDB
+          .ref(`players/${playerId}`)
+          .update(dataToSubmit)
+          .then(() => {
+            this.successForm('Player Updated');
+          })
+          .catch(error => {
+            this.setState({
+              formError: true
+            });
+          });
       } else {
         firebasePlayers
           .push(dataToSubmit)

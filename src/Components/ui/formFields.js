@@ -24,7 +24,7 @@ const FormField = ({ id, formData, change }) => {
             ) : null}
             <input
               {...formData.config}
-              value={formData.values}
+              value={formData.value}
               onChange={e => change({ e, id })}
             />
             {showError()}

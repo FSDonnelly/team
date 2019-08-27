@@ -190,8 +190,8 @@ class EditMatch extends Component {
       ...this.state.formData
     };
     for (let key in newFormData) {
+      console.log(match[key]);
       if (match) {
-        console.log(match);
         newFormData[key].value = match[key];
         newFormData[key].valid = true;
       }
@@ -199,13 +199,14 @@ class EditMatch extends Component {
         newFormData[key].config.options = teamOptions;
       }
     }
-    console.log(newFormData);
+    console.log(newFormData.referee.value);
     this.setState({
       matchId,
       formType: type,
       formData: newFormData,
       teams
     });
+    console.log(this.state.formData);
   }
 
   componentDidMount() {
@@ -225,7 +226,7 @@ class EditMatch extends Component {
     };
 
     if (!matchId) {
-      // Add Match
+      getTeams(false, 'Add Match');
     } else {
       firebaseDB
         .ref(`matches/${matchId}`)
@@ -249,7 +250,26 @@ class EditMatch extends Component {
       formIsValid = this.state.formData[key].valid && formIsValid;
     }
     if (formIsValid) {
-      console.log(dataToSubmit);
+      if (this.state.formType === 'Edit Match') {
+        firebaseDB
+          .ref(`matches/${this.state.matchId}`)
+          .update(dataToSubmit)
+          .then(() => {
+            this.successForm('Updated correctly');
+          })
+          .catch(e => {
+            this.setState({ formError: true });
+          });
+      } else {
+        firebaseMatches
+          .push(dataToSubmit)
+          .then(() => {
+            this.props.history.push('/admin_matches');
+          })
+          .catch(e => {
+            this.setState({ formError: true });
+          });
+      }
     } else {
       this.setState({
         formError: true
@@ -314,7 +334,7 @@ class EditMatch extends Component {
                   id={'referee'}
                   formData={formData.referee}
                   change={element => this.updateForm(element)}
-                  value
+                  value={formData.referee.value}
                 />
                 <FormField
                   id={'stadium'}

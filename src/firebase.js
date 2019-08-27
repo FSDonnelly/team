@@ -11,7 +11,7 @@ const firebaseConfig = {
   authDomain: 'team-app-149fe.firebaseapp.com',
   databaseURL: 'https://team-app-149fe.firebaseio.com',
   projectId: 'team-app-149fe',
-  storageBucket: 'gs://team-app-149fe.appspot.com/',
+  storageBucket: 'gs://team-app-149fe.appspot.com',
   messagingSenderId: '466486957873',
   appId: '1:466486957873:web:599478ef0c1284cb'
 };

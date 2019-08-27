@@ -22,6 +22,26 @@ class Fileuploader extends Component {
     });
   };
 
+  handleUploadSuccess = fileName => {
+    console.log(fileName);
+    const { dir } = this.props;
+    this.setState({
+      name: fileName,
+      isUploading: false
+    });
+    firebase
+      .storage()
+      .ref(dir)
+      .child(fileName)
+      .getDownloadURL()
+      .then(url => {
+        console.log(url);
+        this.setState({
+          fileURL: url
+        });
+      });
+  };
+
   static getDerivedStateFromProps({ defaultImg, defaultImgName }, prevState) {
     if (defaultImg) {
       return (prevState = {
@@ -33,13 +53,13 @@ class Fileuploader extends Component {
   }
 
   render() {
-    const { fileURL, isUploading } = this.state;
+    const { fileURL, isUploading, name } = this.state;
     const { dir, tag } = this.props;
     return (
       <div>
         {!fileURL ? (
           <div>
-            <div className='label_input'>{tag}</div>
+            <div className='label_inputs'>{tag}</div>
             <FileUploader
               accept='image/*'
               name='image'
@@ -58,7 +78,20 @@ class Fileuploader extends Component {
           >
             <CircularProgress style={{ color: '#98c6e9' }} thickness={10} />
           </div>
-        ) : null}
+        ) : (
+          <div className='image_upload_container'>
+            <img
+              style={{
+                width: '100%'
+              }}
+              src={fileURL}
+              alt={name}
+            />
+            <div className='remove' onClick={() => this.resetUpload()}>
+              Remove
+            </div>
+          </div>
+        )}
       </div>
     );
   }

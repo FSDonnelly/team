@@ -9,6 +9,7 @@ import PrivateRoute from './Components/authRoutes/PrivateRoute';
 import PublicRoute from './Components/authRoutes/PublicRoute';
 import Dashboard from './Components/admin/Dashboard';
 import AdminMatches from './Components/admin/matches';
+import AdminPlayers from './Components/admin/players';
 import EditMatch from './Components/admin/matches/EditMatch';
 
 const Routes = props => {
@@ -38,6 +39,12 @@ const Routes = props => {
           path='/admin_matches/edit_match'
           exact
           component={EditMatch}
+        />
+        <PrivateRoute
+          {...props}
+          path='/admin_players'
+          exact
+          component={AdminPlayers}
         />
         <PublicRoute
           {...props}

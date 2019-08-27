@@ -40,6 +40,7 @@ class Fileuploader extends Component {
           fileURL: url
         });
       });
+    this.props.fileName(fileName);
   };
 
   static getDerivedStateFromProps({ defaultImg, defaultImgName }, prevState) {
@@ -51,6 +52,15 @@ class Fileuploader extends Component {
     }
     return null;
   }
+
+  resetUpload = () => {
+    this.setState({
+      name: '',
+      isUploading: false,
+      fileURL: ''
+    });
+    this.props.resetImage();
+  };
 
   render() {
     const { fileURL, isUploading, name } = this.state;
@@ -70,14 +80,6 @@ class Fileuploader extends Component {
               onUploadSuccess={this.handleUploadSuccess}
             />
           </div>
-        ) : null}
-        {isUploading ? (
-          <div
-            className='progress'
-            style={{ textAlign: 'center', margin: '30px 0' }}
-          >
-            <CircularProgress style={{ color: '#98c6e9' }} thickness={10} />
-          </div>
         ) : (
           <div className='image_upload_container'>
             <img
@@ -92,6 +94,14 @@ class Fileuploader extends Component {
             </div>
           </div>
         )}
+        {isUploading ? (
+          <div
+            className='progress'
+            style={{ textAlign: 'center', margin: '30px 0' }}
+          >
+            <CircularProgress style={{ color: '#98c6e9' }} thickness={10} />
+          </div>
+        ) : null}
       </div>
     );
   }

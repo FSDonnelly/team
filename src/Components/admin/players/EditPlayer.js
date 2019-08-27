@@ -87,7 +87,7 @@ class EditPlayer extends Component {
         validation: {
           required: true
         },
-        valid: true
+        valid: false
       }
     }
   };
@@ -104,11 +104,15 @@ class EditPlayer extends Component {
     }
   }
 
-  updateForm(element) {
+  updateForm(element, content = '') {
     const newFormData = { ...this.state.formData };
     const newElement = { ...newFormData[element.id] };
 
-    newElement.value = element.e.target.value;
+    if (content === '') {
+      newElement.value = element.e.target.value;
+    } else {
+      newElement.value = content;
+    }
 
     let validData = validate(newElement);
 
@@ -143,8 +147,18 @@ class EditPlayer extends Component {
     }
   }
 
-  resetImage = () => {};
-  storeFileName = () => {};
+  resetImage = () => {
+    const newFormData = { ...this.state.formData };
+    newFormData['image'].value = '';
+    newFormData['image'].valid = false;
+    this.setState({
+      defaultImg: '',
+      formData: newFormData
+    });
+  };
+  storeFileName = fileName => {
+    this.updateForm({ id: 'image' }, fileName);
+  };
   render() {
     const {
       formData,
@@ -153,6 +167,7 @@ class EditPlayer extends Component {
       formType,
       defaultImg
     } = this.state;
+    console.log(formData);
     return (
       <AdminLayout>
         <div className='editplayers_dialog_wrapper'>

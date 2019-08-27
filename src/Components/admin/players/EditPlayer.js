@@ -128,6 +128,14 @@ class EditPlayer extends Component {
             .getDownloadURL()
             .then(url => {
               this.updateFields(playerData, playerId, 'Edit Player', url);
+            })
+            .catch(error => {
+              this.updateFields(
+                { ...playerData, image: '' },
+                playerId,
+                'Edit Player',
+                ''
+              );
             });
         });
     }

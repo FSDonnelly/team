@@ -129,7 +129,7 @@ class EditPlayer extends Component {
 
   submitForm(e) {
     e.preventDefault();
-
+    const { formType } = this.state;
     let dataToSubmit = {};
     let formIsValid = true;
 
@@ -139,7 +139,20 @@ class EditPlayer extends Component {
     }
 
     if (formIsValid) {
-      // submit form
+      if (formType === 'Edit Player') {
+        ///
+      } else {
+        firebasePlayers
+          .push(dataToSubmit)
+          .then(() => {
+            this.props.history.push('/admin_players');
+          })
+          .catch(error => {
+            this.setState({
+              formError: true
+            });
+          });
+      }
     } else {
       this.setState({
         formError: true
@@ -167,7 +180,7 @@ class EditPlayer extends Component {
       formType,
       defaultImg
     } = this.state;
-    console.log(formData);
+
     return (
       <AdminLayout>
         <div className='editplayers_dialog_wrapper'>

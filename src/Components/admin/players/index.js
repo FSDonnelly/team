@@ -30,7 +30,7 @@ class AdminPlayers extends Component {
   }
   render() {
     const { players } = this.state;
-    console.log(this.state);
+
     return (
       <AdiminLayout>
         <div>

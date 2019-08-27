@@ -190,7 +190,6 @@ class EditMatch extends Component {
       ...this.state.formData
     };
     for (let key in newFormData) {
-      console.log(match[key]);
       if (match) {
         newFormData[key].value = match[key];
         newFormData[key].valid = true;
@@ -199,7 +198,6 @@ class EditMatch extends Component {
         newFormData[key].config.options = teamOptions;
       }
     }
-    console.log(newFormData.referee.value);
     this.setState({
       matchId,
       formType: type,

@@ -37,7 +37,7 @@ const FormField = ({ id, formData, change }) => {
             {formData.showLabel ? (
               <div className='label_inputs'>{formData.config.label}</div>
             ) : null}
-            <select value={formData.values} onChange={e => change({ e, id })}>
+            <select value={formData.value} onChange={e => change({ e, id })}>
               <option value=''>Select one</option>
               {formData.config.options.map(item => (
                 <option key={item.key} value={item.key}>

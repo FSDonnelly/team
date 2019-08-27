@@ -5,6 +5,8 @@ import AdminLayout from '../../../HOC/AdminLayout';
 import { firebasePlayers, firebase, firebaseDB } from '../../../firebase';
 import { firebaseLooper } from '../../ui/misc';
 
+import FileUploader from '../../ui/fileUploader';
+
 class EditPlayer extends Component {
   state = {
     playerId: '',
@@ -78,6 +80,14 @@ class EditPlayer extends Component {
         valid: false,
         validationMessage: '',
         showLabel: true
+      },
+      image: {
+        element: 'image',
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: true
       }
     }
   };
@@ -132,14 +142,31 @@ class EditPlayer extends Component {
       });
     }
   }
+
+  resetImage = () => {};
+  storeFileName = () => {};
   render() {
-    const { formData, formSuccess, formError, formType } = this.state;
+    const {
+      formData,
+      formSuccess,
+      formError,
+      formType,
+      defaultImg
+    } = this.state;
     return (
       <AdminLayout>
         <div className='editplayers_dialog_wrapper'>
           <h2>{formType}</h2>
           <div>
             <form onSubmit={e => this.submitForm(e)}>
+              <FileUploader
+                dir='players'
+                tag={'Player Image'}
+                defaultImg={defaultImg}
+                defaultImgName={formData.image.value}
+                resetImage={() => this.resetImage()}
+                fileName={fileName => this.storeFileName(fileName)}
+              />
               <FormField
                 id={'name'}
                 formData={formData.name}

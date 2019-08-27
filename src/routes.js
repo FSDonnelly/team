@@ -33,6 +33,12 @@ const Routes = props => {
           exact
           component={EditMatch}
         />
+        <PrivateRoute
+          {...props}
+          path='/admin_matches/edit_match'
+          exact
+          component={EditMatch}
+        />
         <PublicRoute
           {...props}
           exact

@@ -34,8 +34,8 @@ class MatchesList extends Component {
           timing: { duration: 500, delay: i * 50, ease: easePolyOut }
         })}
         leave={() => ({
-          opacity: 0,
-          x: -200
+          opacity: [0],
+          x: [-200]
         })}
       >
         {nodes => (
@@ -49,7 +49,7 @@ class MatchesList extends Component {
                   transform: `translate(${x}px)`
                 }}
               >
-                <div className='block_wrapper'>
+                <div className='block_wraper'>
                   <div className='block'>
                     <div
                       className='icon'
@@ -69,6 +69,17 @@ class MatchesList extends Component {
                     ></div>
                     <div className='team'>{data.away}</div>
                     <div className='result'>{data.resultAway}</div>
+                  </div>
+                </div>
+                <div className='block_wraper nfo'>
+                  <div>
+                    <strong>Date:</strong> {data.date}
+                  </div>
+                  <div>
+                    <strong>Stadium:</strong> {data.stadium}
+                  </div>
+                  <div>
+                    <strong>Referee:</strong> {data.referee}
                   </div>
                 </div>
               </div>

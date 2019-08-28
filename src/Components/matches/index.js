@@ -3,6 +3,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { firebaseMatches } from '../../firebase';
 import { firebaseLooper, reverseArray } from '../ui/misc';
 
+import LeagueTable from './table';
+
 class Matches extends Component {
   state = {
     loading: true,
@@ -25,8 +27,17 @@ class Matches extends Component {
   }
 
   render() {
-    console.log(this.state);
-    return <div className='the_matches_container'>The Matches</div>;
+    const {} = this.state;
+    return (
+      <div className='the_matches_container'>
+        <div className='the_matches_wrapper'>
+          <div className='left'></div>
+          <div className='right'>
+            <LeagueTable />
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 

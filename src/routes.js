@@ -2,11 +2,13 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import Layout from './HOC/Layout';
 
-import Home from './Components/home';
-import SignIn from './Components/signin';
-
 import PrivateRoute from './Components/authRoutes/PrivateRoute';
 import PublicRoute from './Components/authRoutes/PublicRoute';
+
+import Home from './Components/home';
+import SignIn from './Components/signin';
+import Team from './Components/team';
+
 import Dashboard from './Components/admin/Dashboard';
 import AdminMatches from './Components/admin/matches';
 import AdminPlayers from './Components/admin/players';
@@ -59,6 +61,13 @@ const Routes = props => {
           path='/admin_players'
           exact
           component={AdminPlayers}
+        />
+        <PublicRoute
+          {...props}
+          exact
+          restricted={false}
+          component={Team}
+          path='/the_team'
         />
         <PublicRoute
           {...props}

@@ -3,7 +3,6 @@ import FormField from '../../ui/formFields';
 import { validate } from '../../ui/misc';
 import AdminLayout from '../../../HOC/AdminLayout';
 import { firebasePlayers, firebase, firebaseDB } from '../../../firebase';
-import { firebaseLooper } from '../../ui/misc';
 
 import FileUploader from '../../ui/fileUploader';
 

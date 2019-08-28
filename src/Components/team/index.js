@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Fade from 'react-reveal/Fade';
 import { Promise } from 'core-js';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Stripes from '../../Resources/images/stripes.png';
 import PlayerCard from '../ui/playerCard';
@@ -43,9 +44,70 @@ class Team extends Component {
     });
   }
 
+  showPlayersByCategory = category =>
+    this.state.players ? (
+      this.state.players.map((player, i) => {
+        return player.position === category ? (
+          <Fade delay={i * 20} left key={i}>
+            <div className='item'>
+              <PlayerCard
+                number={player.number}
+                name={player.name}
+                lastname={player.lastname}
+                bck={player.url}
+              />
+            </div>
+          </Fade>
+        ) : null;
+      })
+    ) : (
+      <CircularProgress thickness={10} style={{ color: '#98c5e9' }} />
+    );
+
   render() {
-    console.log(this.state.players);
-    return <div>The Team</div>;
+    const { loading } = this.state;
+    return (
+      <div
+        className='the_team_container'
+        style={{
+          background: `url(${Stripes}) repeat`
+        }}
+      >
+        {!loading ? (
+          <div>
+            <div className='team_category_wrapper'>
+              <div className='title'>Keepers</div>
+              <div className='team_cards'>
+                {this.showPlayersByCategory('Keeper')}
+              </div>
+            </div>
+
+            <div className='team_category_wrapper'>
+              <div className='title'>Defence</div>
+              <div className='team_cards'>
+                {this.showPlayersByCategory('Defence')}
+              </div>
+            </div>
+
+            <div className='team_category_wrapper'>
+              <div className='title'>Midfield</div>
+              <div className='team_cards'>
+                {this.showPlayersByCategory('Midfield')}
+              </div>
+            </div>
+
+            <div className='team_category_wrapper'>
+              <div className='title'>Strikers</div>
+              <div className='team_cards'>
+                {this.showPlayersByCategory('Striker')}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <CircularProgress thickness={10} style={{ color: '#98c5e9' }} />
+        )}
+      </div>
+    );
   }
 }
 

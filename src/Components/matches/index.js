@@ -4,6 +4,7 @@ import { firebaseMatches } from '../../firebase';
 import { firebaseLooper, reverseArray } from '../ui/misc';
 
 import LeagueTable from './table';
+import MatchesList from './MatchesList';
 
 class Matches extends Component {
   state = {
@@ -27,11 +28,14 @@ class Matches extends Component {
   }
 
   render() {
-    const {} = this.state;
+    const { filterMatches } = this.state;
     return (
       <div className='the_matches_container'>
         <div className='the_matches_wrapper'>
-          <div className='left'></div>
+          <div className='left'>
+            <div className='matches_filters'>{/*  */}</div>
+            <MatchesList matches={filterMatches} />
+          </div>
           <div className='right'>
             <LeagueTable />
           </div>

@@ -43,9 +43,9 @@ class Fileuploader extends Component {
     this.props.fileName(fileName);
   };
 
-  static getDerivedStateFromProps({ defaultImg, defaultImgName }, prevState) {
+  static getDerivedStateFromProps({ defaultImg, defaultImgName }, state) {
     if (defaultImg) {
-      return (prevState = {
+      return (state = {
         name: defaultImgName,
         fileURL: defaultImg
       });

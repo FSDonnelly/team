@@ -104,7 +104,9 @@ class Team extends Component {
             </div>
           </div>
         ) : (
-          <CircularProgress thickness={10} style={{ color: '#98c5e9' }} />
+          <div className='the_team_caontainer'>
+            <CircularProgress thickness={10} style={{ color: '#98c5e9' }} />
+          </div>
         )}
       </div>
     );

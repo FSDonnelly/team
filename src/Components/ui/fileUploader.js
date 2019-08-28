@@ -89,7 +89,11 @@ class Fileuploader extends Component {
               src={fileURL}
               alt={name}
             />
-            <div className='remove' onClick={() => this.resetUpload()}>
+            <div
+              className='remove'
+              onClick={() => this.resetUpload()}
+              style={{ cursor: 'pointer' }}
+            >
               Remove
             </div>
           </div>

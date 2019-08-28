@@ -9,6 +9,7 @@ import Home from './Components/home';
 import SignIn from './Components/signin';
 import Team from './Components/team';
 import Matches from './Components/matches';
+import NotFound from './Components/ui/not_found';
 
 import Dashboard from './Components/admin/Dashboard';
 import AdminMatches from './Components/admin/matches';
@@ -91,6 +92,7 @@ const Routes = props => {
           component={Home}
           path='/'
         />
+        <PublicRoute {...props} restricted={false} component={NotFound} />
       </Switch>
     </Layout>
   );

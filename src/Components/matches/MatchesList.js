@@ -88,7 +88,11 @@ class MatchesList extends Component {
         )}
       </NodeGroup>
     ) : (
-      <CircularProgress thickness={10} style={{ color: '#98c5e9' }} />
+      <CircularProgress
+        thickness={10}
+        style={{ color: '#98c5e9' }}
+        className='progress'
+      />
     );
 
   render() {
